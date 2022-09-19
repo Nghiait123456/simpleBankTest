@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -28,9 +29,11 @@ import (
 This is main function
 
 
+
 */
 
 func main() {
+	fmt.Println("start server go")
 	config, err := util.LoadConfig(".")
 	if err != nil {
 		log.Fatal("cannot load config:", err)
@@ -41,7 +44,8 @@ func main() {
 		log.Fatal("cannot connect to db:", err)
 	}
 
-	runDBMigration(config.MigrationURL, config.DBSource)
+	fmt.Println(config.MigrationURL, config.DBSource)
+	//runDBMigration(config.MigrationURL, config.DBSource)
 
 	store := db.NewStore(conn)
 	go runGatewayServer(config, store)
